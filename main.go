@@ -7,7 +7,7 @@ import (
 
 	"github.com/1107-adishjain/sandbox/config"
 	"github.com/1107-adishjain/sandbox/routes"
-	"github.com/1107-adishjain/sandbox/storage"
+	// "github.com/1107-adishjain/sandbox/storage"
 	"gorm.io/gorm"
 	"os/signal"
 	"syscall"
@@ -26,14 +26,15 @@ func main(){
 		fmt.Printf("Error loading config: %v\n",err)
 	}
 
-	db, err:= storage.NewConnection(cfg)
-	if err != nil{
-		fmt.Printf("Error connecting to database: %v\n",err)
-	}
-	app:= &Application{
-		Cfg: cfg,
-		DB: db,
-	}
+	// db, err:= storage.NewConnection(cfg)
+	// if err != nil{
+	// 	fmt.Printf("Error connecting to database: %v\n",err)
+	// }
+	// app:= &Application{
+	// 	Cfg: cfg,
+	// 	DB: db,
+	// }
+
 	srv:= &http.Server{
 		Addr: ":"+cfg.Port,
 		Handler: route.Routes(),
