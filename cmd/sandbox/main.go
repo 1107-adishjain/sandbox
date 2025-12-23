@@ -4,21 +4,16 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-
 	"github.com/1107-adishjain/sandbox/config"
 	"github.com/1107-adishjain/sandbox/routes"
-	// "github.com/1107-adishjain/sandbox/storage"
-	"gorm.io/gorm"
+	"github.com/1107-adishjain/sandbox/storage"
+	"github.com/1107-adishjain/sandbox/app"	
 	"os/signal"
 	"syscall"
 	"context"
 	"time"
 )
 
-type Application struct{
-	Cfg *config.Config
-	DB *gorm.DB
-}
 func main(){
 
 	cfg, err := config.LoadConfig()
@@ -26,18 +21,18 @@ func main(){
 		fmt.Printf("Error loading config: %v\n",err)
 	}
 
-	// db, err:= storage.NewConnection(cfg)
-	// if err != nil{
-	// 	fmt.Printf("Error connecting to database: %v\n",err)
-	// }
-	// app:= &Application{
-	// 	Cfg: cfg,
-	// 	DB: db,
-	// }
+	db, err:= storage.NewConnection(cfg)
+	if err != nil{
+		fmt.Printf("Error connecting to database: %v\n",err)
+	}
+	app:= &app.Application{
+		Cfg: cfg,
+		DB: db,
+	}
 
 	srv:= &http.Server{
 		Addr: ":"+cfg.Port,
-		Handler: route.Routes(),
+		Handler: route.Routes(app),
 		IdleTimeout: 120 * time.Second,
 	}
 
