@@ -15,16 +15,24 @@ import (
 )
 
 func main(){
-
+	// load the configuration variables.
 	cfg, err := config.LoadConfig()
 	if err !=nil{
 		fmt.Printf("Error loading config: %v\n",err)
 	}
-
+	// initialize database connection
 	db, err:= storage.NewConnection(cfg)
 	if err != nil{
 		fmt.Printf("Error connecting to database: %v\n",err)
 	}
+	// #closing database connection when main go routine ends.
+	defer func(){
+		err:= storage.CloseConnection(db)
+		if err!= nil{
+			fmt.Printf("Error closing database connection: %v\n",err)
+		}
+	}()
+	
 	app:= &app.Application{
 		Cfg: cfg,
 		DB: db,

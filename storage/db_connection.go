@@ -5,6 +5,18 @@ import(
 )
 
 func NewConnection(cfg *config.Config) (*gorm.DB, error) {
-	// Database connection logic here
-	return nil, nil
+
+	db,err := gorm.Open(nil, &gorm.Config{})
+	if err!=nil{
+		return nil,err
+	}
+	return db, nil
+}
+
+func CloseConnection(db *gorm.DB) error{
+	sqlDB, err := db.DB()
+	if err != nil{
+		return err
+	}
+	return sqlDB.Close()
 }
