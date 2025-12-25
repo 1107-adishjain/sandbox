@@ -16,3 +16,5 @@ type Book struct {
 func MigrateBooks(db *gorm.DB) error {
 	return db.AutoMigrate(&Book{})
 }
+
+
