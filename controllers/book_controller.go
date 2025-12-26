@@ -34,6 +34,10 @@ func CreateBook(app *app.Application)  gin.HandlerFunc {
 func DeleteBook(app *app.Application) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		book_id := c.Param("id")
+		if book_id==""{
+			c.JSON(400,gin.H{"error":"book id is required"})
+			return
+		}
 		// this deletes the book from the database using its ID. it runs a query like "DELETE FROM books WHERE id=book_id"
 		err:= app.DB.Delete(&models.Books{}, book_id).Error
 		if err!=nil{
@@ -60,6 +64,10 @@ func GetBooks(app *app.Application) gin.HandlerFunc {
 func GetBooksbyID(app *app.Application) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		book_id:= c.Param("id")
+		if book_id==""{
+			c.JSON(400,gin.H{"error":"book id is required"})
+			return
+		}
 		var book models.Books
 		// This gets the book by using its ID. It runs a query like "SELECT * FROM books WHERE id=book_id"
 		err:= app.DB.First(&book,book_id)
