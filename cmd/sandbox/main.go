@@ -1,17 +1,19 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
-	"github.com/1107-adishjain/sandbox/config"
-	"github.com/1107-adishjain/sandbox/routes"
-	"github.com/1107-adishjain/sandbox/storage"
-	"github.com/1107-adishjain/sandbox/app"	
 	"os/signal"
 	"syscall"
-	"context"
 	"time"
+
+	"github.com/1107-adishjain/sandbox/app"
+	"github.com/1107-adishjain/sandbox/config"
+	"github.com/1107-adishjain/sandbox/models"
+	"github.com/1107-adishjain/sandbox/routes"
+	"github.com/1107-adishjain/sandbox/storage"
 )
 
 func main(){
@@ -33,6 +35,12 @@ func main(){
 		}
 	}()
 	
+	err= models.MigrateBooks(db)
+	if err!=nil{
+		fmt.Printf("Error migrating database: %v\n",err)
+		return
+	}
+
 	app:= &app.Application{
 		Cfg: cfg,
 		DB: db,
