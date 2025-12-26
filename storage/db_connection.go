@@ -7,7 +7,7 @@ import(
 )
 
 func NewConnection(cfg *config.Config) (*gorm.DB, error) {
-	dsn:= fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s connect_timeout=10 sslmode=prefer", 
+	dsn:= fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s connect_timeout=10 sslmode=disable", 
 	cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBUser, cfg.DBPassword)
 	db,err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err!=nil{

@@ -31,7 +31,7 @@ func Routes(app *app.Application) *gin.Engine {
 	r1 := router.Group("/api/v1")
 	{
 		r1.GET("/healthcheck", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{"server working": true})
+			c.JSON(http.StatusOK, gin.H{"status": "OK"})
 		})
 		r1.POST("/create_books",controllers.CreateBook(app))
 		r1.DELETE("/delete_book/:id",controllers.DeleteBook(app))
