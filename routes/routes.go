@@ -22,7 +22,7 @@ func Routes(app *app.Application) *gin.Engine {
 		MaxAge:        3600,
 	}))
 	router.Use(mw.SecurityHeaders())
-	limiter := tollbooth.NewLimiter(50, nil)
+	limiter := tollbooth.NewLimiter(100, nil)
 	router.Use(tollbooth_gin.LimitHandler(limiter))
 	router.Use(func(c *gin.Context) {
 		c.Request.Body = http.MaxBytesReader(c.Writer, c.Request.Body, 20<<20) // 20 MB limit

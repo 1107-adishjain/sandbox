@@ -5,7 +5,7 @@ import (
 )
 
 // this book struct represents the books table in the database
-type Book struct {
+type Books struct {
 	ID        uint   `json:"id" gorm:"primaryKey, autoIncrement"`
 	Author    string `json:"author"`
 	Title     string `json:"title" gorm:"not null"`
@@ -14,7 +14,7 @@ type Book struct {
 }
 
 func MigrateBooks(db *gorm.DB) error {
-	return db.AutoMigrate(&Book{})
+	return db.AutoMigrate(&Books{})
 }
 
 
