@@ -8,11 +8,11 @@ import (
 )
 
 // this bookInput struct contains the json request body fields
-type BookInput struct{
-	Author string `json:"author"`
-	Title string `json:"title"`
+type BookInput struct {
+	Author    string `json:"author"`
+	Title     string `json:"title"`
 	Publisher string `json:"publisher"`
-	Year int `json:"year"`
+	Year      int    `json:"year"`
 }
 
 func CreateBook(app *app.Application) gin.HandlerFunc {
@@ -29,11 +29,11 @@ func CreateBook(app *app.Application) gin.HandlerFunc {
 			return
 		}
 
-		book:= models.Books{
-			Author: input.Author,
-			Title: input.Title,
+		book := models.Books{
+			Author:    input.Author,
+			Title:     input.Title,
 			Publisher: input.Publisher,
-			Year: input.Year,
+			Year:      input.Year,
 		}
 
 		if err := app.DB.Create(&book).Error; err != nil {
@@ -82,7 +82,7 @@ func GetBooks(app *app.Application) gin.HandlerFunc {
 func GetBooksbyID(app *app.Application) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		bookID := c.Param("id")
-		
+
 		if bookID == "" {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "book id is required"})
 			return
@@ -97,7 +97,7 @@ func GetBooksbyID(app *app.Application) gin.HandlerFunc {
 			}
 			return
 		}
-		
+
 		c.JSON(http.StatusOK, book)
 	}
 }

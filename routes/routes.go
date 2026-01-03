@@ -1,13 +1,13 @@
 package route
 
 import (
-	mw "github.com/1107-adishjain/sandbox/middleware"
+	"github.com/1107-adishjain/sandbox/app"
 	"github.com/1107-adishjain/sandbox/controllers"
+	mw "github.com/1107-adishjain/sandbox/middleware"
 	"github.com/didip/tollbooth/v7"
 	"github.com/didip/tollbooth_gin"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
-	"github.com/1107-adishjain/sandbox/app"
 	"net/http"
 )
 
@@ -33,10 +33,10 @@ func Routes(app *app.Application) *gin.Engine {
 		r1.GET("/healthcheck", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{"status": "OK"})
 		})
-		r1.POST("/create_books",controllers.CreateBook(app))
-		r1.DELETE("/delete_book/:id",controllers.DeleteBook(app))
-		r1.GET("/books",controllers.GetBooks(app))
-		r1.GET("/books/:id",controllers.GetBooksbyID(app))
+		r1.POST("/create_books", controllers.CreateBook(app))
+		r1.DELETE("/delete_book/:id", controllers.DeleteBook(app))
+		r1.GET("/books", controllers.GetBooks(app))
+		r1.GET("/books/:id", controllers.GetBooksbyID(app))
 	}
 	return router
 
